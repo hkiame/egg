@@ -24,9 +24,7 @@ function skipSpace(string){
 function parseApply(expr, program){
 	program = skipSpace(program);
 
-	if(program[0] != "("){
-		return {expr: expr, rest: program};
-	}
+	if(program[0] != "("){ return {expr: expr, rest: program}; }
 
 	program = skipSpace(program.slice(1));
 	expr = {type: "apply", operator: expr, args: []};
@@ -42,6 +40,18 @@ function parseApply(expr, program){
 			throw new SyntaxError("Expected ',' or ')'");
 		}
 	}
-
+    /*
+    * parseApply must, after it has parsed an application
+    * call itself again to check whether another pair of parentheses follows.
+    */
 	return parseApply(expr, program.slice(1));
+}
+
+function parse(program){
+	let result = parseExpression(program);
+	if(skipSpace(result.rest).length > 0){
+		throw new SyntaxError("Unexpected text after program");
+	}
+
+	return result.expr;
 }
