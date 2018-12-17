@@ -5,6 +5,6 @@
 	<title>Egg programming language</title>
 </head>
 <body>
-<script type="text/js" src="js/script"></script>
+<script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>
